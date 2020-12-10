@@ -2,14 +2,42 @@ import React from "react";
 import { moviesData } from "../moviesData";
 import MovieItem from "./MovieItem";
 
-export class App extends React.Component {
+class App extends React.Component {
   constructor() {
     super();
-    
+
     this.state = {
       movies: moviesData,
       moviesWillWatch: []
     };
+  }
+
+  addMovieToWillWatch = (movie) =>  {
+    const updateWillWatch = [...this.state.moviesWillWatch, movie];
+
+    this.setState({
+      moviesWillWatch: updateWillWatch,
+    });
+  }
+
+  removeMovieFromWillWatch = (movie) => {
+    const updateWillWatch = this.state.moviesWillWatch.filter((item) => {
+      return item.id !== movie.id;
+    });
+
+    this.setState({
+      moviesWillWatch: updateWillWatch,
+    });
+  }
+
+  removeMovie(movie) {
+    const updateMovies = this.state.movies.filter((item) => {
+      return item.id !== movie.id;
+    });
+
+    this.setState({
+      movies: updateMovies,
+    });
   }
 
   render() {
@@ -24,6 +52,7 @@ export class App extends React.Component {
                     <MovieItem
                       key={movie.id}
                       movie={movie}
+                      removeMovie={this.removeMovie}
                       removeMovieFromWillWatch={this.removeMovieFromWillWatch}
                       addMovieToWillWatch={this.addMovieToWillWatch}
                       self={this}
@@ -33,42 +62,39 @@ export class App extends React.Component {
               })}
             </div>
           </div>
-          <div className="col-3 mt-3">
-            <p>Will Watch: {this.state.moviesWillWatch.length}</p>
+          <div className="col-3">
+            <h4>Will Watch: {this.state.moviesWillWatch.length} movies</h4>
+            <ul className="list-group">
+              {this.state.moviesWillWatch.map(movie => (
+                <li key={movie.id} className="list-group-item">
+                  <div className="d-flex justify-content-between">
+                    <p>{movie.title}</p>
+                    <p>{movie.vote_average}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
     );
   }
-
-  addMovieToWillWatch = (movie) =>  {
-    // const updateWillWatch = [...this.state.moviesWillWatch];
-    // updateWillWatch.push(movie);
-
-    const updateWillWatch = [...this.state.moviesWillWatch, movie];
-
-    this.setState({
-      moviesWillWatch: updateWillWatch,
-    });
-  }
-
-  removeMovieFromWillWatch = (movie) => {
-    const updateMoviesWillWatch = this.state.moviesWillWatch.filter((item) => {
-      return item.id !== movie.id;
-    });
-
-    this.setState({
-      moviesWillWatch: updateMoviesWillWatch,
-    });
-  }
-
-  removeMovie(movie) {
-    const updateMovies = this.state.movies.filter((item) => {
-      return item.id !== movie.id;
-    });
-
-    this.setState({
-      movies: updateMovies,
-    });
-  }
 }
+
+export default App;
+
+/*
+<div className="col-3">
+  <h4>Will Watch: {this.state.moviesWillWatch.length} movies</h4>
+  <ul className="list-group">
+    {this.state.moviesWillWatch.map(movie => (
+      <li key={movie.id} className="list-group-item">
+        <div className="d-flex justify-content-between">
+          <p>{movie.title}</p>
+          <p>{movie.vote_average}</p>
+        </div>
+      </li>
+    ))}
+  </ul>
+</div>
+*/
