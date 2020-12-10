@@ -5,6 +5,7 @@ import MovieItem from "./MovieItem";
 export class App extends React.Component {
   constructor() {
     super();
+    
     this.state = {
       movies: moviesData,
       moviesWillWatch: []
@@ -23,7 +24,7 @@ export class App extends React.Component {
                     <MovieItem
                       key={movie.id}
                       movie={movie}
-                      removeMovie={this.removeMovie}
+                      removeMovieFromWillWatch={this.removeMovieFromWillWatch}
                       addMovieToWillWatch={this.addMovieToWillWatch}
                       self={this}
                     />
@@ -40,7 +41,7 @@ export class App extends React.Component {
     );
   }
 
-  addMovieToWillWatch(movie) {
+  addMovieToWillWatch = (movie) =>  {
     // const updateWillWatch = [...this.state.moviesWillWatch];
     // updateWillWatch.push(movie);
 
@@ -48,6 +49,16 @@ export class App extends React.Component {
 
     this.setState({
       moviesWillWatch: updateWillWatch,
+    });
+  }
+
+  removeMovieFromWillWatch = (movie) => {
+    const updateMoviesWillWatch = this.state.moviesWillWatch.filter((item) => {
+      return item.id !== movie.id;
+    });
+
+    this.setState({
+      moviesWillWatch: updateMoviesWillWatch,
     });
   }
 
