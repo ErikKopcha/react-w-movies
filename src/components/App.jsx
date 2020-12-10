@@ -62,7 +62,7 @@ class App extends React.Component {
               })}
             </div>
           </div>
-          <div className="col-3">
+          <div className="col-3 mt-3">
             <h4>Will Watch: {this.state.moviesWillWatch.length} movies</h4>
             <ul className="list-group">
               {this.state.moviesWillWatch.map(movie => (
@@ -82,19 +82,3 @@ class App extends React.Component {
 }
 
 export default App;
-
-/*
-<div className="col-3">
-  <h4>Will Watch: {this.state.moviesWillWatch.length} movies</h4>
-  <ul className="list-group">
-    {this.state.moviesWillWatch.map(movie => (
-      <li key={movie.id} className="list-group-item">
-        <div className="d-flex justify-content-between">
-          <p>{movie.title}</p>
-          <p>{movie.vote_average}</p>
-        </div>
-      </li>
-    ))}
-  </ul>
-</div>
-*/
