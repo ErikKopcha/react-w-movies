@@ -1,6 +1,8 @@
 import React from "react";
 import { moviesData } from "../moviesData";
 import MovieItem from "./MovieItem";
+import { API_URL, API_KEY_3 } from "../utils/api";
+import MovieTabs from './MovieTabs';
 
 class App extends React.Component {
   constructor() {
@@ -8,8 +10,29 @@ class App extends React.Component {
 
     this.state = {
       movies: moviesData,
-      moviesWillWatch: []
+      moviesWillWatch: [],
+      sortBy: "revenue.desc"
     };
+  }
+
+  componentDidMount() {
+    fetch(`${API_URL}/discover/movie?api_key=${API_KEY_3}&${this.state.sortBy}`)
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      this.setState({
+        movies: data.results
+      });
+    })
+  }
+
+  componentDidUpdate() {
+
+  }
+
+  componentDidUnmount() {
+
   }
 
   addMovieToWillWatch = (movie) =>  {
@@ -36,15 +59,28 @@ class App extends React.Component {
     });
 
     this.setState({
-      movies: updateMovies,
+      movies: updateMovies
     });
   }
 
+  updateSortBy = (value) => {
+    this.setState({
+      sortBy: value
+    });
+  }
+ 
   render() {
     return (
       <div className="container">
         <div className="row">
           <div className="col-9">
+            <div className="row">
+              <div className="col-12">
+                <MovieTabs 
+                  sortBy={this.state.sortBy} 
+                  updateSortBy={this.updateSortBy} />
+              </div>
+            </div>
             <div className="row">
               {this.state.movies.map((movie) => {
                 return (
@@ -62,7 +98,7 @@ class App extends React.Component {
               })}
             </div>
           </div>
-          <div className="col-3 mt-3">
+          <div className="col-3 mt-3 position-sticky-top">
             <h4>Will Watch: {this.state.moviesWillWatch.length} movies</h4>
             <ul className="list-group">
               {this.state.moviesWillWatch.map(movie => (

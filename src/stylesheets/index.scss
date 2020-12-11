@@ -9,3 +9,9 @@ body {
     color: #007bff;
   }
 }
+
+.position-sticky-top {
+  position: sticky;
+  top: 10px;
+  align-self: flex-start;
+}
