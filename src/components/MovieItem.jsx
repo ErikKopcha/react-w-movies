@@ -9,6 +9,10 @@ class MovieItem extends React.Component {
     };
   }
 
+  // componentWillUnmount() {
+  //   console.log('unmount => ')
+  // }
+
   render() {
     const { self, movie, removeMovie, removeMovieFromWillWatch, addMovieToWillWatch } = this.props;
 
@@ -16,7 +20,7 @@ class MovieItem extends React.Component {
       <div key={movie.id} className="card">
       <img 
         className="card-img-top"
-        src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path || movie.poster_path}`} 
+        src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path || movie.poster_path || '/yOCRqvrRrxbs5FYq2pX1KtLJwmR.jpg'}`} 
         alt="card"/>
       <div className="card-body">
         <h6 className="card-title">{movie.title}</h6>

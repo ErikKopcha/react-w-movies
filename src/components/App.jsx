@@ -16,7 +16,29 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`${API_URL}/discover/movie?api_key=${API_KEY_3}&${this.state.sortBy}`)
+    console.log('componentDidMount => ', );
+
+    this.getFilmList();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log('componentDidUpdate => ', );
+    
+    if (prevState.sortBy !== this.state.sortBy) {
+      console.log('prevState.sortBy !== this.state.sortBy => ', );
+
+      this.getFilmList()
+    }
+  }
+
+  componentDidUnmount() {
+    console.log('componentDidUnmount => ', );
+  }
+
+  getFilmList() {
+    console.log('getFilmList => ', this.state.sortBy);
+
+    fetch(`${API_URL}/discover/movie?api_key=${API_KEY_3}&sort_by=${this.state.sortBy}`)
     .then((response) => {
       return response.json();
     })
@@ -25,14 +47,6 @@ class App extends React.Component {
         movies: data.results
       });
     })
-  }
-
-  componentDidUpdate() {
-
-  }
-
-  componentDidUnmount() {
-
   }
 
   addMovieToWillWatch = (movie) =>  {
@@ -70,6 +84,8 @@ class App extends React.Component {
   }
  
   render() {
+    console.log('render => ', );
+
     return (
       <div className="container">
         <div className="row">
