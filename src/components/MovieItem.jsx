@@ -9,10 +9,6 @@ class MovieItem extends React.Component {
     };
   }
 
-  // componentWillUnmount() {
-  //   console.log('unmount => ')
-  // }
-
   render() {
     const { self, movie, removeMovie, removeMovieFromWillWatch, addMovieToWillWatch } = this.props;
 
@@ -41,6 +37,7 @@ class MovieItem extends React.Component {
         <button
           type="button"
           className="btn btn-danger"
+          disabled={this.state.willWatch ? true : false}
           onClick={removeMovie.bind(self, movie)}>
           Delete movie
         </button>
